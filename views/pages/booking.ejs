@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Booking</title>
+    <link rel="icon" href="../../images/icon-r.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/6.5.95/css/materialdesignicons.min.css">
+
+    <style>
+        body {
+            background: #0f0f0f;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .booking-card {
+            background: linear-gradient(135deg, #1c1c1c, #111);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid #333;
+        }
+
+        .form-control,
+        .form-select {
+            background-color: #0c0c0c !important;
+            border-color: #444 !important;
+            color: #fff !important;
+        }
+
+        .btn-danger {
+            background: #e50914;
+            border: none;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+            transform: scale(1.02);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+
+            <form action="/booking" method="post" class="booking-card col-md-10 shadow-lg">
+                <div class="row">
+                    <div class="col-md-4 text-center border-end border-secondary">
+                        <img src="<%= movie.image %>" class="img-fluid rounded mb-3 shadow" style="max-height: 350px;">
+                        <h3 class="fw-bold text-danger">
+                            <%= movie.title %>
+                        </h3>
+                        <p class="text-secondary small">
+                            <%= movie.year %> | Cinematic Experience
+                        </p>
+
+                        <% if (show) { %>
+                            <div class="mt-4 p-3 bg-dark rounded-3 text-start border border-danger">
+                                <h6 class="text-danger border-bottom border-secondary pb-2 mb-3">Pre-selected Schedule
+                                </h6>
+                                <p class="mb-1 small"><i class="mdi mdi-calendar-clock me-2"></i>
+                                    <%= new Date(show.showTime).toLocaleString() %>
+                                </p>
+                                <p class="mb-1 small"><i class="mdi mdi-home-modern me-2"></i>
+                                    <%= show.theaterId.name %>
+                                </p>
+                                <p class="mb-0 small"><i class="mdi mdi-monitor me-2"></i> Screen <%= show.screenId.name
+                                        %>
+                                </p>
+                            </div>
+                            <% } else { %>
+                                <div class="mt-4 p-3 bg-dark rounded-3 text-start border border-secondary">
+                                    <h6 class="text-secondary border-bottom border-secondary pb-2 mb-3">Scheduling</h6>
+                                    <p class="small text-secondary">Please select your preferred schedule on the right →
+                                    </p>
+                                </div>
+                                <% } %>
+                    </div>
+
+                    <div class="col-md-8 ps-md-5">
+                        <h2 class="mb-4 fw-bold">Complete Your Booking</h2>
+
+                        <!-- Hidden Fields -->
+                        <input type="hidden" name="movieId" value="<%= movie._id %>">
+                        <input type="hidden" name="showId" value="<%= show ? show._id : 'manual' %>">
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-secondary small">Customer Name</label>
+                                <input type="text" class="form-control" value="<%= user.name %>" readonly disabled>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-secondary small">Email Address</label>
+                                <input type="email" class="form-control" value="<%= user.email %>" readonly disabled>
+                            </div>
+                        </div>
+
+                        <!-- Location & Schedule -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-secondary small">Select Theater</label>
+                                <% if (show) { %>
+                                    <input type="text" class="form-control" value="<%= show.theaterId.name %>" readonly
+                                        disabled>
+                                    <input type="hidden" name="theaterId" value="<%= show.theaterId._id %>">
+                                    <% } else { %>
+                                        <select name="theaterId" class="form-select" required>
+                                            <option value="" disabled selected>Choose Theater</option>
+                                            <% theaters.forEach(t=> { %>
+                                                <option value="<%= t._id %>">
+                                                    <%= t.name %> - <%= t.location %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                        <% } %>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-secondary small">Select Screen</label>
+                                <% if (show) { %>
+                                    <input type="text" class="form-control" value="Screen <%= show.screenId.name %>"
+                                        readonly disabled>
+                                    <input type="hidden" name="screenId" value="<%= show.screenId._id %>">
+                                    <% } else { %>
+                                        <select name="screenId" class="form-select" required>
+                                            <option value="" disabled selected>Choose Screen</option>
+                                            <% screens.forEach(s=> { %>
+                                                <option value="<%= s._id %>">
+                                                    <%= s.name %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                        <% } %>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-secondary small">Booking Date</label>
+                                <% if (show) { %>
+                                    <input type="text" class="form-control"
+                                        value="<%= new Date(show.showTime).toLocaleDateString() %>" readonly disabled>
+                                    <input type="hidden" name="date"
+                                        value="<%= new Date(show.showTime).toLocaleDateString() %>">
+                                    <% } else { %>
+                                        <input type="date" name="date" class="form-control" required>
+                                        <% } %>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-secondary small">Showtime</label>
+                                <% if (show) { %>
+                                    <input type="text" class="form-control"
+                                        value="<%= new Date(show.showTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %>"
+                                        readonly disabled>
+                                    <input type="hidden" name="time"
+                                        value="<%= new Date(show.showTime).toLocaleTimeString() %>">
+                                    <% } else { %>
+                                        <input type="time" name="time" class="form-control" required>
+                                        <% } %>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-secondary small">Number of Seats</label>
+                                <input type="number" name="seats" min="1" max="10" value="1" class="form-control"
+                                    required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-secondary small">Seat Number(s) (e.g. A1, A2)</label>
+                                <input type="text" name="seatNumber" placeholder="Enter seat names" class="form-control"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-dark border-secondary mt-3">
+                            <p class="mb-0 small text-secondary">
+                                <i class="mdi mdi-information-outline me-1"></i>
+                                Booking once confirmed cannot be cancelled. Please check the details carefully.
+                            </p>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-danger btn-lg py-3 fw-bold">Confirm & Pay</button>
+                            <a href="/home" class="btn btn-outline-secondary">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

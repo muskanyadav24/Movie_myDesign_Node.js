@@ -1,0 +1,25 @@
+{
+  "name": "movie_mydesign",
+  "version": "1.0.0",
+  "description": "Movie website using Node.js",
+  "license": "ISC",
+  "author": "miku24",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.2",
+    "cookie": "^1.1.1",
+    "cookie-parser": "^1.4.7",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "mongoose": "^9.1.2",
+    "multer": "^2.0.2",
+    "nodemailer": "^7.0.12",
+    "otp-generator": "^4.0.1"
+  }
+}

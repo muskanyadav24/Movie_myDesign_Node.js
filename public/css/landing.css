@@ -1,0 +1,206 @@
+body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Hero Landing */
+        .hero-section {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), #000),
+                url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #9ca3af);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            color: #d1d5db;
+        }
+
+        .cta-btn {
+            background-color: #e50914;
+            color: #fff;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 5px;
+            border: none;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .cta-btn:hover {
+            background-color: #b91c1c;
+            transform: scale(1.05);
+            color: #fff;
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 20px 50px;
+            background: transparent;
+            position: absolute;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .navbar-brand {
+            color: #e50914 ;
+            font-weight: 900;
+            font-size: 2rem;
+        }
+
+        /* Section Styling */
+        .section-title {
+            margin: 80px 0 40px;
+            font-weight: 800;
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        .movie-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .movie-card:hover {
+            transform: translateY(-12px);
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(229, 9, 20, 0.25);
+            border-color: rgba(229, 9, 20, 0.4);
+        }
+
+        .movie-img {
+            height: 450px;
+            object-fit: cover;
+            width: 100%;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .movie-card:hover .movie-img {
+            transform: scale(1.1);
+            filter: brightness(1.15);
+        }
+
+        .movie-info {
+            padding: 20px;
+        }
+
+        .movie-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .glass-stats {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: -100px;
+            z-index: 10;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #e50914;
+        }
+
+        .stat-item p {
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+        }
+
+/* HERO TEXT RESPONSIVE FIX ONLY */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 16px;
+    }
+    .btn{
+        font-size: 13px;
+        padding: 3px 6px;
+    }
+    .hero-content h1 {
+        font-size: 21px;
+        line-height: 1.1;
+        margin-top: 130px;
+        padding: 0px 15px;
+        word-break: break-word;
+        text-align: center;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+        padding: 0 20px;
+    }
+
+    .glass-stats{
+        margin-top: 85px;
+    }
+    .cta-btn{
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+.section-title {
+    font-size: 22px;
+    margin: 50px 0 30px;
+}
+.movie-title {
+    font-size: 14px;}
+}
+
+@media (max-width: 992px) {
+    .navbar-brand {
+        font-size: 19px;
+    }
+    .btn{
+        font-size: 13px;
+        padding: 3px 6px;
+    }
+    .hero-content h1 {
+        font-size: 21px;
+        line-height: 1.1;
+        margin-top: 130px;
+        padding: 0px 15px;
+        word-break: break-word;
+        text-align: center;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+        padding: 0 20px;
+    }
+    .glass-stats{
+        margin-top: 85px;
+    }
+    .cta-btn{
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}

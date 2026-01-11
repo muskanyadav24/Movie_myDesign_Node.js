@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Screen</title>
+    <link rel="icon" href="../../images/icon-r.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #141414;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-card {
+            background: #1f1f1f;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-card">
+        <h2 class="mb-4 text-center">Add New Screen</h2>
+
+        <% if (typeof error !=='undefined' && error) { %>
+            <div class="alert alert-danger">
+                <%= error %>
+            </div>
+            <% } %>
+
+                <form action="/add-screen" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Screen Name</label>
+                        <input type="text" name="name" class="form-control bg-dark text-white border-secondary"
+                            placeholder="e.g. Screen 1" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Select Theater</label>
+                        <select name="theaterId" class="form-select bg-dark text-white border-secondary" required>
+                            <option value="" disabled selected>Choose a Theater</option>
+                            <% theaters.forEach(theater=> { %>
+                                <option value="<%= theater._id %>">
+                                    <%= theater.name %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Seat Capacity</label>
+                        <input type="number" name="seats" class="form-control bg-dark text-white border-secondary"
+                            required>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-danger btn-lg">Add Screen</button>
+                        <div class="d-flex gap-2">
+                            <a href="/screens" class="btn btn-outline-secondary w-50">View All</a>
+                            <a href="/admin" class="btn btn-dark w-50">Admin Panel</a>
+                        </div>
+                    </div>
+                </form>
+    </div>
+
+</body>
+
+</html>

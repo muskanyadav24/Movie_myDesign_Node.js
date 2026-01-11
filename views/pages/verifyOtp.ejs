@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    <link rel="icon" href="../../images/icon-r.png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
+                url("../../images/bg.jpg") no-repeat center center/cover;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .logo {
+            color: #e50914;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .otp-box {
+            background: rgba(0, 0, 0, 0.75);
+            padding: 60px;
+            max-width: 450px;
+            margin: 80px auto;
+            border-radius: 4px;
+        }
+
+        .otp-box h2 {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .otp-box p {
+            color: #b3b3b3;
+            margin-bottom: 25px;
+        }
+
+        .form-control {
+            background: #333;
+            border: none;
+            color: #fff;
+            height: 50px;
+            font-size: 16px;
+            letter-spacing: 4px;
+            text-align: center;
+        }
+
+        .form-control::placeholder {
+            color: #b3b3b3;
+            letter-spacing: normal;
+        }
+
+        .btn-red {
+            background: #e50914;
+            color: #fff;
+            font-weight: bold;
+            height: 50px;
+        }
+
+        .btn-red:hover {
+            background: #b91c1c;
+        }
+
+        .small-text {
+            color: #b3b3b3;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="container-fluid px-5 pt-4">
+        <div class="logo">RealCinema</div>
+    </div>
+
+    <!-- OTP Box -->
+    <div class="otp-box">
+        <h2>Verify OTP</h2>
+        <p>Please enter the OTP sent to your registered email address.</p>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <form action="/verify-otp" method="POST">
+            <div class="mb-4">
+                <input type="text" name="otp" class="form-control"
+                    placeholder="Enter 4-digit OTP" maxlength="6" required>
+            </div>
+
+            <button type="submit" class="btn btn-red w-100 mb-3">
+                Verify OTP
+            </button>
+        </form>
+
+        <p class="small-text text-center mt-3">
+            Didn’t receive the OTP?
+            <a href="/forgot-password" class="text-white text-decoration-none">
+                Resend OTP
+            </a>
+        </p>
+    </div>
+
+</body>
+</html>

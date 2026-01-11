@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealCinema - Movies & Booking</title>
+    <link rel="icon" href="../images/icon-r.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../css/landing.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="/">REALCINEMA</a>
+        <div class="ms-auto">
+            <a href="/login" class="btn btn-outline-light me-3">Login</a>
+            <a href="/register" class="btn btn-danger">Join Now</a>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Cine Experience Redefined</h1>
+            <p>Watch the latest blockbusters and book your favorite seats in seconds.</p>
+            <a href="/register" class="cta-btn">Start Watching →</a>
+        </div>
+    </div>
+
+    <div class="container overflow-visible">
+        <div class="glass-stats row text-center">
+            <div class="col-md-3 stat-item">
+                <h3>
+                    <%= totalMovies %>+
+                </h3>
+                <p>Movies Streaming</p>
+            </div>
+            <div class="col-md-3 stat-item">
+                <h3>
+                    <%= totalShows %>+
+                </h3>
+                <p>Daily Shows</p>
+            </div>
+            <div class="col-md-3 stat-item">
+                <h3>
+                    <%= totalTickets %>+
+                </h3>
+                <p>Sold Tickets</p>
+            </div>
+            <div class="col-md-3 stat-item">
+                <h3>
+                    <%= totalCustomers %>+
+                </h3>
+                <p>Happy Viewers</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-5 pb-5">
+        <h2 class="section-title">Latest Releases</h2>
+        <div class="row g-4">
+            <% movies.slice(0, 4).forEach(movie=> { %>
+                <div class="col-md-3">
+                    <div class="movie-card">
+                        <img src="<%= movie.image %>" class="movie-img">
+                        <div class="movie-info">
+                            <div class="movie-title">
+                                <%= movie.title %>
+                            </div>
+                            <a href="/register?returnTo=/booking/<%= movie._id %>"
+                                class="btn btn-outline-danger w-100 rounded-pill">Book Ticket</a>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="/register" class="btn btn-danger btn-lg px-5 py-3 rounded-pill fw-bold">Explore All Movies</a>
+        </div>
+    </div>
+
+    <footer class="py-5 text-center border-top border-secondary mt-5">
+        <p class="text-secondary" style="font-size:20px;">
+            Crafted with ❤️ by <span style="color:#e50914;">Muskan Yadav</span>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Theater</title>
+    <link rel="icon" href="../../images/icon-r.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #141414;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-card {
+            background: #1f1f1f;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-card">
+        <h2 class="mb-4 text-center">Edit Theater</h2>
+
+        <form action="/edit-theater/<%= theater._id %>" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Theater Name</label>
+                <input type="text" name="name" class="form-control bg-dark text-white border-secondary"
+                    value="<%= theater.name %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Location</label>
+                <input type="text" name="location" class="form-control bg-dark text-white border-secondary"
+                    value="<%= theater.location %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Total Seats</label>
+                <input type="number" name="theaterSeats" class="form-control bg-dark text-white border-secondary"
+                    value="<%= theater.theaterSeats %>" required>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-danger btn-lg">Update Theater</button>
+                <a href="/theaters" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

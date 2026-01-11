@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+    <link rel="icon" href="../../images/icon-r.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #141414;
+            color: #fff;
+        }
+
+        .movie-row {
+            transition: background 0.2s;
+        }
+
+        .movie-row:hover {
+            background: #1f1f1f;
+        }
+
+        .poster-thumb {
+            width: 50px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>🎬 Available Movies</h1>
+            <div>
+                <% if (userRole==='admin' ) { %>
+                    <a href="/add-movie" class="btn btn-danger me-2">+ Add Movie</a>
+                    <% } %>
+                        <a href="/home" class="btn btn-outline-light">Back to Home</a>
+            </div>
+        </div>
+
+        <div class="card bg-dark border-secondary">
+            <div class="card-body p-0">
+                <table class="table table-dark table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="p-3">Poster</th>
+                            <th scope="col" class="p-3">Title</th>
+                            <th scope="col" class="p-3">Year</th>
+                            <th scope="col" class="p-3">Description</th>
+                            <% if (userRole==='admin' ) { %>
+                                <th scope="col" class="p-3">Actions</th>
+                                <% } %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% movies.forEach(movie=> { %>
+                            <tr class="movie-row">
+                                <td class="p-3">
+                                    <img src="<%= movie.image %>" class="poster-thumb">
+                                </td>
+                                <td class="p-3 align-middle fw-bold">
+                                    <%= movie.title %>
+                                </td>
+                                <td class="p-3 align-middle">
+                                    <%= movie.year %>
+                                </td>
+                                <td class="p-3 align-middle small">
+                                    <%= movie.desc %>
+                                </td>
+                                <% if (userRole==='admin' ) { %>
+                                    <td class="p-3 align-middle text-nowrap">
+                                        <div class="d-flex gap-2">
+                                            <a href="/edit-movie/<%= movie._id %>"
+                                                class="btn btn-sm btn-outline-light">Edit</a>
+                                            <form action="/delete-movie" method="POST"
+                                                onsubmit="return confirm('Are you sure?');">
+                                                <input type="hidden" name="id" value="<%= movie._id %>">
+                                                <button type="submit"
+                                                    class="btn btn-sm btn-outline-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <% } %>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

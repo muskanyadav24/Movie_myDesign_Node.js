@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= movie.title %> - Details
+    </title>
+    <link rel="icon" href="../../images/icon-r.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #141414;
+            color: #fff;
+        }
+
+        .hero {
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, #141414 0%, rgba(20, 20, 20, 0.6) 100%);
+        }
+
+        .movie-poster-large {
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin-top: -150px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .review-card {
+            background: #1f1f1f;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .star-rating {
+            color: #e50914;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Hero Section (Blurred Background or generic image) -->
+    <div class="hero" style="background-image: url('<%= movie.image %>');">
+        <div class="hero-overlay"></div>
+    </div>
+
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img src="<%= movie.image %>" class="movie-poster-large">
+            </div>
+            <div class="col-md-8 pt-5 text-white">
+                <h1 class="display-4 fw-bold">
+                    <%= movie.title %> <span class="text-secondary">(<%= movie.year %>)</span>
+                </h1>
+                <p class="lead mt-3">
+                    <%= movie.desc %>
+                </p>
+                <div class="mt-4">
+                    <a href="/home" class="btn btn-outline-light me-2">Back to Home</a>
+                    <a href="/booking/<%= movie._id %>" class="btn btn-danger btn-lg">Book Tickets</a>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-secondary my-5">
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h3 class="mb-4">Reviews & Ratings</h3>
+
+                <!-- Add Review Form -->
+                <div class="card bg-dark border-secondary mb-5">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3 text-white">Add Your Review</h5>
+                        <form action="/add-review" method="POST">
+                            <input type="hidden" name="movieId" value="<%= movie._id %>">
+                            <div class="mb-3">
+                                <label class="form-label text-white">Rating</label>
+                                <select name="rating" class="form-select bg-black text-white border-secondary" required
+                                    style="width: 150px;">
+                                    <option value="5">⭐⭐⭐⭐⭐ 5</option>
+                                    <option value="4">⭐⭐⭐⭐ 4</option>
+                                    <option value="3">⭐⭐⭐ 3</option>
+                                    <option value="2">⭐⭐ 2</option>
+                                    <option value="1">⭐ 1</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-white">Comment</label>
+                                <textarea name="comment" class="form-control bg-black text-white border-secondary"
+                                    rows="3" required placeholder="What did you think?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-danger">Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Reviews List -->
+                <% if (reviews.length===0) { %>
+                    <p class="text-white">No reviews yet. Be the first to review!</p>
+                    <% } else { %>
+                        <% reviews.forEach(review=> { %>
+                            <div class="review-card">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="fw-bold text-white">
+                                        <%= review.customerId ? review.customerId.name : 'Anonymous' %>
+                                    </span>
+                                    <span class="text-white small">
+                                        <%= new Date(review.createdAt).toLocaleDateString() %>
+                                    </span>
+                                </div>
+                                <div class="star-rating mb-2">
+                                    <% for(let i=0; i<review.rating; i++) { %>★<% } %>
+                                            <% for(let i=review.rating; i<5; i++) { %>☆<% } %>
+                                </div>
+                                <p class="mb-0 text-white">
+                                    <%= review.comment %>
+                                </p>
+                            </div>
+                            <% }) %>
+                                <% } %>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

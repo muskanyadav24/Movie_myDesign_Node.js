@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <link rel="icon" href="../../images/icon-r.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #141414;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .booking-card {
+            background: #1f1f1f;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .booking-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .poster-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>🎟 My Bookings</h1>
+            <a href="/home" class="btn btn-outline-light">Back to Home</a>
+        </div>
+
+        <div class="row g-4">
+            <% if (tickets.length===0) { %>
+                <div class="col-12 text-center py-5">
+                    <h3 class="text-white">No tickets booked yet.</h3>
+                    <a href="/home" class="btn btn-danger mt-3">Browse Movies</a>
+                </div>
+                <% } else { %>
+
+                    <% tickets.forEach(ticket=> { %>
+                        <div class="col-md-4 col-lg-3">
+                            <div class="booking-card shadow">
+                                <img src="<%= ticket.poster %>" class="poster-img">
+                                <div class="p-3">
+                                    <h5 class="mb-1 text-truncate fw-bold text-danger">
+                                        <%= ticket.movieTitle %>
+                                    </h5>
+                                    <div class="small text-secondary mb-3">
+                                        <div class="mb-1"><i class="mdi mdi-calendar-clock me-1"></i>
+                                            <%= ticket.bookingDate %>
+                                        </div>
+                                        <div class="mb-1"><i class="mdi mdi-home-modern me-1"></i>
+                                            <%= ticket.theaterName %>
+                                        </div>
+                                        <div class="mb-1"><i class="mdi mdi-monitor me-1"></i>
+                                            <%= ticket.screenName %>
+                                        </div>
+                                        <div><i class="mdi mdi-seat-recline-normal me-1"></i> Seat: <span
+                                                class="text-white">
+                                                <%= ticket.seatNumber %>
+                                            </span></div>
+                                    </div>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-secondary">
+                                        <span class="badge bg-danger rounded-pill px-3">
+                                            <%= ticket.seats %>
+                                                <%= ticket.seats> 1 ? 'Tickets' : 'Ticket' %>
+                                        </span>
+
+                                        <form action="/delete-booking" method="POST" class="d-inline"
+                                            onsubmit="return confirm('Cancel this booking?');">
+                                            <input type="hidden" name="ticketId" value="<%= ticket._id %>">
+                                            <button type="submit"
+                                                class="btn btn-sm btn-link text-secondary text-decoration-none p-0">Cancel</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+
+                            <% } %>
+        </div>
+    </div>
+
+</body>
+
+</html>
