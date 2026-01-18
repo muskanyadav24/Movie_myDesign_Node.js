@@ -57,19 +57,37 @@ const bookingPage = async (req, res) => {
 // =======================
 const bookTicket = async (req, res) => {
   try {
-    const { showId, movieId, seats, seatNumber, theaterId, screenId, date, time } = req.body;
-    const customerId = req.user;
+    const {
+      showId,
+      movieId,
+      seats,
+      seatNumber,
+      theaterId,
+      screenId,
+      date,
+      time
+    } = req.body;
 
-    // Validate seats
+    const customerId = req.user._id; // ✅ FIXED
     const seatCount = parseInt(seats, 10);
-    if (!seatCount || seatCount <= 0) throw new Error("Invalid number of seats");
 
-    let pricePerSeat = 0;
-    let movieTitle = "", poster = "", theaterName = "", screenName = "", bookingDate = "", showTime = "";
+    if (!seatCount || seatCount <= 0) {
+      throw new Error("Invalid seat count");
+    }
 
-    // Fetch show or manual booking
+    let movieTitle = "";
+    let poster = "";
+    let theaterName = "";
+    let screenName = "";
+    let bookingDate = "";
+    let showTime = "";
+    let pricePerSeat = 100;
+
+    // 🎬 FROM SHOW
     if (showId && showId !== "manual") {
-      const show = await Show.findById(showId).populate("movieId theaterId screenId");
+      const show = await Show.findById(showId)
+        .populate("movieId theaterId screenId");
+
       if (!show) throw new Error("Show not found");
 
       movieTitle = show.movieId.title;
@@ -77,15 +95,21 @@ const bookTicket = async (req, res) => {
       theaterName = show.theaterId.name;
       screenName = show.screenId.name;
       bookingDate = new Date(show.showTime).toLocaleDateString();
-      showTime = new Date(show.showTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-      pricePerSeat = Number(show.price) || Number(show.movieId.price) || 100;
-    } else {
+      showTime = new Date(show.showTime).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+      pricePerSeat = show.price || show.movieId.price || 100;
+    }
+    // 📝 MANUAL BOOKING
+    else {
       const movie = await Movie.findById(movieId);
       const theater = await Theater.findById(theaterId);
       const screen = await Screen.findById(screenId);
 
-      if (!movie || !theater || !screen) throw new Error("Movie, theater, or screen not found");
+      if (!movie || !theater || !screen) {
+        throw new Error("Invalid booking data");
+      }
 
       movieTitle = movie.title;
       poster = movie.image;
@@ -93,16 +117,13 @@ const bookTicket = async (req, res) => {
       screenName = screen.name;
       bookingDate = date || new Date().toLocaleDateString();
       showTime = time || "N/A";
-
-      pricePerSeat = Number(movie.price) || 100;
+      pricePerSeat = movie.price || 100;
     }
-
-    if (!pricePerSeat || isNaN(pricePerSeat) || pricePerSeat <= 0) throw new Error("Invalid price for booking");
 
     const totalPrice = pricePerSeat * seatCount;
 
-    // Create ticket
-    const ticket = await Ticket.create({
+    // 🎟️ SAVE TICKET
+    await Ticket.create({
       movieId,
       theaterId,
       screenId,
@@ -118,25 +139,27 @@ const bookTicket = async (req, res) => {
       price: totalPrice
     });
 
-    // Send booking confirmation email
-    try {
-      const customer = await Customer.findById(customerId);
-      await sendBookingEmail(customer.email, {
-        name: customer.name,
-        movieName: movieTitle,
-        showDate: bookingDate,
-        showTime: showTime,
-        seats: seatNumber || Array.from({ length: seatCount }, (_, i) => i + 1), // fallback to seat numbers
-        price: totalPrice 
-      });
-    } catch (emailError) {
-      console.error("Booking email failed:", emailError);
-    }
+    // 📧 SEND EMAIL (IMPORTANT PART)
+    const customer = await Customer.findById(customerId);
+
+    console.log("📧 Sending booking email to:", customer.email);
+
+    await sendBookingEmail(customer.email, {
+      name: customer.name,
+      movieName: movieTitle,
+      showDate: bookingDate,
+      showTime: showTime,
+      seats: seatNumber || seatCount,
+      price: totalPrice
+    });
+
+    console.log("✅ Booking email sent");
 
     res.redirect("/my-bookings");
+
   } catch (error) {
-    console.log("Booking Error:", error.message);
-    res.status(500).send("Server Error - Could not complete booking");
+    console.error("❌ Booking Error:", error);
+    res.status(500).send("Booking failed");
   }
 };
 
