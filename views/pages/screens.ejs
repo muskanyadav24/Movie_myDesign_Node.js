@@ -26,10 +26,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>🖥 Screens</h1>
             <div>
-                <% if (userRole==='admin' ) { %>
-                    <a href="/add-screen" class="btn btn-danger me-2">+ Add Screen</a>
-                    <% } %>
-                        <a href="/home" class="btn btn-outline-light">Back to Home</a>
+                <a href="/home" class="btn btn-outline-light">Back to Home</a>
             </div>
         </div>
 
@@ -41,9 +38,6 @@
                             <th scope="col" class="p-3">Screen Name</th>
                             <th scope="col" class="p-3">Theater</th>
                             <th scope="col" class="p-3">Capacity</th>
-                            <% if (userRole==='admin' ) { %>
-                                <th scope="col" class="p-3">Actions</th>
-                                <% } %>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,20 +52,6 @@
                                 <td class="p-3 align-middle">
                                     <%= screen.seats %> Seats
                                 </td>
-                                <% if (userRole==='admin' ) { %>
-                                    <td class="p-3 align-middle text-nowrap">
-                                        <div class="d-flex gap-2">
-                                            <a href="/edit-screen/<%= screen._id %>"
-                                                class="btn btn-sm btn-outline-light">Edit</a>
-                                            <form action="/delete-screen" method="POST"
-                                                onsubmit="return confirm('Delete this screen?');">
-                                                <input type="hidden" name="id" value="<%= screen._id %>">
-                                                <button type="submit"
-                                                    class="btn btn-sm btn-outline-danger">Delete</button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                    <% } %>
                             </tr>
                             <% }) %>
                     </tbody>

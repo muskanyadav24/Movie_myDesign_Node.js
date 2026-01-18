@@ -102,7 +102,6 @@
             <% } %>
 
                 <form action="/login" method="post">
-                    <input type="hidden" name="returnTo" value="<%= returnTo %>">
                     <input type="email" name="email" class="form-control" placeholder="Email or mobile number" required>
                     <input type="password" name="password" class="form-control" placeholder="Password" required>
 
@@ -117,7 +116,7 @@
 
                     <p class="mt-4 small-text">
                         New to RealCinema?
-                        <a href="/register?returnTo=<%= encodeURIComponent(returnTo) %>"
+                        <a href="/register"
                             class="text-white text-decoration-none"> Sign up now.</a>
                     </p>
 

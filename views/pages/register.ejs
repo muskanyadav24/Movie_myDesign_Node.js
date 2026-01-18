@@ -102,7 +102,7 @@
             <% } %>
 
                 <form action="/register" method="post">
-                    <input type="hidden" name="returnTo" value="<%= returnTo %>">
+                    <input type="hidden" name="returnTo" value="">
 
                     <div class="mb-3">
                         <input type="name" name="name" class="form-control" placeholder="Username" required>
@@ -123,7 +123,7 @@
                     <button class="btn btn-red w-100 mb-3" type="submit">Sign Up</button>
                     <p class="mt-4 small-text">
                         Already have an account?
-                        <a href="/login?returnTo=<%= encodeURIComponent(returnTo) %>"
+                        <a href="/login"
                             class="text-white text-decoration-none"> Login now.</a>
                     </p>
                 </form>

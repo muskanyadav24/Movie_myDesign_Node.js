@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     resetOtpExpiry: {
         type: Date,
         default: null,
-    },
+    }
 
 });
 

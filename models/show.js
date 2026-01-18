@@ -23,6 +23,10 @@ const showSchema = new mongoose.Schema({
     seats: {
         type: Number,
         required: true
+    },
+    price: {                
+        type: Number,
+        required: true
     }
 });
 

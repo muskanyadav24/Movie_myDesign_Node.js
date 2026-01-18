@@ -28,10 +28,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>🏢 Theaters</h1>
             <div>
-                <% if (userRole==='admin' ) { %>
-                    <a href="/add-theater" class="btn btn-danger me-2">+ Add Theater</a>
-                    <% } %>
-                        <a href="/home" class="btn btn-outline-light">Back to Home</a>
+                <a href="/home" class="btn btn-outline-light">Back to Home</a>
             </div>
         </div>
 
@@ -43,9 +40,6 @@
                             <th scope="col" class="p-3">Name</th>
                             <th scope="col" class="p-3">Location</th>
                             <th scope="col" class="p-3">Capacity</th>
-                            <% if (userRole==='admin' ) { %>
-                                <th scope="col" class="p-3">Actions</th>
-                                <% } %>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,20 +54,6 @@
                                 <td class="p-3 align-middle">
                                     <%= theater.theaterSeats %> Seats
                                 </td>
-                                <% if (userRole==='admin' ) { %>
-                                    <td class="p-3 align-middle text-nowrap">
-                                        <div class="d-flex gap-2">
-                                            <a href="/edit-theater/<%= theater._id %>"
-                                                class="btn btn-sm btn-outline-light">Edit</a>
-                                            <form action="/delete-theater" method="POST"
-                                                onsubmit="return confirm('Delete this theater?');">
-                                                <input type="hidden" name="id" value="<%= theater._id %>">
-                                                <button type="submit"
-                                                    class="btn btn-sm btn-outline-danger">Delete</button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                    <% } %>
                             </tr>
                             <% }) %>
                     </tbody>

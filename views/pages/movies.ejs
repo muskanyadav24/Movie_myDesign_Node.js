@@ -36,10 +36,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>🎬 Available Movies</h1>
             <div>
-                <% if (userRole==='admin' ) { %>
-                    <a href="/add-movie" class="btn btn-danger me-2">+ Add Movie</a>
-                    <% } %>
-                        <a href="/home" class="btn btn-outline-light">Back to Home</a>
+                <a href="/home" class="btn btn-outline-light">Back to Home</a>
             </div>
         </div>
 
@@ -52,9 +49,7 @@
                             <th scope="col" class="p-3">Title</th>
                             <th scope="col" class="p-3">Year</th>
                             <th scope="col" class="p-3">Description</th>
-                            <% if (userRole==='admin' ) { %>
-                                <th scope="col" class="p-3">Actions</th>
-                                <% } %>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -72,20 +67,7 @@
                                 <td class="p-3 align-middle small">
                                     <%= movie.desc %>
                                 </td>
-                                <% if (userRole==='admin' ) { %>
-                                    <td class="p-3 align-middle text-nowrap">
-                                        <div class="d-flex gap-2">
-                                            <a href="/edit-movie/<%= movie._id %>"
-                                                class="btn btn-sm btn-outline-light">Edit</a>
-                                            <form action="/delete-movie" method="POST"
-                                                onsubmit="return confirm('Are you sure?');">
-                                                <input type="hidden" name="id" value="<%= movie._id %>">
-                                                <button type="submit"
-                                                    class="btn btn-sm btn-outline-danger">Delete</button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                    <% } %>
+                                
                             </tr>
                             <% }) %>
                     </tbody>

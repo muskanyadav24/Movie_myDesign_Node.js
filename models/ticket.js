@@ -47,6 +47,10 @@ const ticketSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Customer",
         required: true
+    },
+    price: {               
+        type: Number,
+        required: true
     }
 });
 

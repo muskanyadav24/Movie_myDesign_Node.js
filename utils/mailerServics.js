@@ -7,6 +7,9 @@ const transporter = nodemailer.createTransport({
     user: "muskanyadav92163@gmail.com", // email
     pass: "sdphbudsmjvrietb", // app password
   },
+  tls: {
+    rejectUnauthorized: false, //  THIS LINE FIXES THE ERROR
+  },
 });
 
 // Send OTP Email
@@ -60,7 +63,52 @@ const generateOtp = (length) => {
   return otp;
 };
 
+const sendBookingEmail = async (toEmail, bookingDetails) => {
+  const {
+    name,
+    movieName,
+    showDate,
+    showTime,
+    seats,
+    price,
+  } = bookingDetails;
+
+  await transporter.sendMail({
+    from: `"RealCinema 🎬" <muskanyadav92163@gmail.com>`,
+    to: toEmail,
+    subject: "🎟️ Movie Booking Confirmed – RealCinema",
+    html: `
+      <div style="font-family: Arial, sans-serif;">
+        <h2 style="color:#e50914;">🎬 Booking Confirmed!</h2>
+
+        <p>Hi <b>${name}</b>,</p>
+
+        <p>Your movie ticket has been <b>successfully booked</b>.</p>
+
+        <hr>
+
+        <p><b>🎥 Movie:</b> ${movieName}</p>
+        <p><b>📅 Date:</b> ${showDate}</p>
+        <p><b>⏰ Time:</b> ${showTime}</p>
+        <p><b>💺 Seats:</b> ${Array.isArray(seats) ? seats.join(", ") : seats}</p>
+        <p><b>💰 Total Amount:</b> ₹${price}</p>
+        
+        <hr>
+
+        <p>Please arrive <b>15 minutes early</b>.</p>
+
+        <p>Enjoy the show 🍿</p>
+
+        <br>
+        <p>Thanks,<br><b>RealCinema Team 🎬</b></p>
+      </div>
+    `,
+  });
+};
+
+
 module.exports = {
   sendOtpEmail,
   generateOtp,
+  sendBookingEmail
 };
